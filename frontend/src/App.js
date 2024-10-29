@@ -6,9 +6,8 @@ import Card from "./components/Card";
 function App() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(1);
-  console.log(selectedMonth);
+  const [species, setSpecies] = useState([]);
   const handleMapClick = async (event) => {
-    console.log(event);
     const { lat, lng } = event.lngLat;
     const latitude =
       lat.toFixed(1) < Math.round(lat)
@@ -27,6 +26,7 @@ function App() {
       const data = await response.json();
 
       console.log(data.results);
+      setSpecies(data.results);
     } catch (error) {
       console.error("Error fetching species data:", error);
     }
@@ -66,7 +66,9 @@ function App() {
           onClick={handleMapClick}
         />
       </div>
-      <Card />
+      {species.map(() => (
+        <Card />
+      ))}
     </>
   );
 }

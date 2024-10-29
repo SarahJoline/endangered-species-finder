@@ -5,11 +5,16 @@ import "./App.css";
 function App() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(1);
-  const [species, setSpecies] = useState("");
-
+  console.log(selectedMonth);
+  const handleMapClick = (event) => {
+    console.log(event);
+    const { lat: latitude, lng: longitude } = event.lngLat;
+    console.log(latitude, longitude);
+    setSelectedLocation({ latitude, longitude });
+  };
   return (
     <>
-      <form onSubmit={handleSearch}>
+      <form>
         <select
           onChange={(e) => setSelectedMonth(e.target.value)}
           value={selectedMonth}
@@ -27,13 +32,6 @@ function App() {
           <option value="11">November</option>
           <option value="12">December</option>
         </select>
-        <input
-          type="text"
-          name="species"
-          value={species}
-          onChange={(e) => setSpecies(e.target.value)}
-        />
-        <button type="submit">Search</button>
       </form>
       <div style={{ width: "80vw", height: "80vh" }}>
         <Map
@@ -46,6 +44,7 @@ function App() {
           mapStyle="mapbox://styles/mapbox/streets-v11"
           width="100%"
           height="100%"
+          onClick={handleMapClick}
         />
       </div>
     </>

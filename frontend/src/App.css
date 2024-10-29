@@ -3,3 +3,10 @@
   height: 100vh;
 }
 
+.mapboxgl-ctrl-attrib-button {
+  display: none;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+  display: none;
+}

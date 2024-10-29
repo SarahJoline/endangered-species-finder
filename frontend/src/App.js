@@ -1,52 +1,32 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Map from "react-map-gl";
 import "./App.css";
 
 function App() {
-  const [trackingData, setTrackingData] = useState(null);
-  const [speciesList, setSpeciesList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(1);
   const [species, setSpecies] = useState("");
-  const handleSearch = async () => {};
-  useEffect(() => {
-    // Fetch data from your backend API
-    const fetchSpeciesTypeData = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.gbif.org/v1/species/search?habitat=FRESHWATER`
-        );
-        // const response = await axios.get(`/api`);
-        setSpeciesList(response.data.results);
-        setLoading(false);
-      } catch (error) {
-        setError("Failed to fetch tracking data");
-        setLoading(false);
-      }
-    };
 
-    const fetchTrackingData = async () => {
-      try {
-        const response = await axios.get(
-          `https://api.gbif.org/v1/occurrence/search?scientificName=Glomeromycota`
-        );
-        // const response = await axios.get(`/api`);
-        setTrackingData(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError("Failed to fetch tracking data");
-        setLoading(false);
-      }
-    };
-    fetchSpeciesTypeData();
-    fetchTrackingData();
-  }, []);
-
-  console.log(speciesList);
   return (
     <>
       <form onSubmit={handleSearch}>
+        <select
+          onChange={(e) => setSelectedMonth(e.target.value)}
+          value={selectedMonth}
+        >
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
         <input
           type="text"
           name="species"

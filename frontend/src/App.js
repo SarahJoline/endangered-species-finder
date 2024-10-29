@@ -6,11 +6,29 @@ function App() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(1);
   console.log(selectedMonth);
-  const handleMapClick = (event) => {
+  const handleMapClick = async (event) => {
     console.log(event);
-    const { lat: latitude, lng: longitude } = event.lngLat;
-    console.log(latitude, longitude);
+    const { lat, lng } = event.lngLat;
+    const latitude =
+      lat.toFixed(1) < Math.round(lat)
+        ? `${lat.toFixed(1)},${Math.round(lat)}`
+        : `${Math.round(lat)},${lat.toFixed(1)}`;
+    const longitude =
+      lng.toFixed(1) < Math.round(lng)
+        ? `${lng.toFixed(1)},${Math.round(lng)}`
+        : `${Math.round(lng)},${lng.toFixed(1)}`;
     setSelectedLocation({ latitude, longitude });
+
+    try {
+      const response = await fetch(
+        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}`
+      );
+      const data = await response.json();
+
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching species data:", error);
+    }
   };
   return (
     <>

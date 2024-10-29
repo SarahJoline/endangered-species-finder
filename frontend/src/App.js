@@ -64,8 +64,8 @@ function App() {
           onClick={handleMapClick}
         />
       </div>
-      {species.map(() => (
-        <Card />
+      {species.map((sp) => (
+        <Card sp={sp} />
       ))}
     </>
   );

@@ -9,11 +9,6 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("Animal Migration Tracker API is running!");
-});
-
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

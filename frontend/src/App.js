@@ -4,7 +4,6 @@ import "./App.css";
 import Card from "./components/Card";
 
 function App() {
-  const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(1);
   const [species, setSpecies] = useState([]);
   const handleMapClick = async (event) => {
@@ -17,7 +16,6 @@ function App() {
       lng.toFixed(1) < Math.round(lng)
         ? `${lng.toFixed(1)},${Math.round(lng)}`
         : `${Math.round(lng)},${lng.toFixed(1)}`;
-    setSelectedLocation({ latitude, longitude });
 
     try {
       const response = await fetch(

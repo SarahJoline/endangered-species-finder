@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Map from "react-map-gl";
 import "./App.css";
+import Card from "./components/Card";
 
 function App() {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -25,7 +26,7 @@ function App() {
       );
       const data = await response.json();
 
-      console.log(data);
+      console.log(data.results);
     } catch (error) {
       console.error("Error fetching species data:", error);
     }
@@ -65,6 +66,7 @@ function App() {
           onClick={handleMapClick}
         />
       </div>
+      <Card />
     </>
   );
 }

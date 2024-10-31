@@ -8,7 +8,7 @@ function App() {
   const [speciesList, setSpeciesList] = useState([]);
   const [categories, setCatergory] = useState([]);
 
-  const [selectedKingdom, setSelectedKingdom] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [species, setSpecies] = useState([]);
 
   const handleSearch = async (e) => {
@@ -19,7 +19,7 @@ function App() {
     console.log(data);
     // setSpeciesList(data);
   };
-
+  console.log(categories);
   handleSearch();
 
   async function fetchCategories() {
@@ -32,6 +32,8 @@ function App() {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  console.log(categories);
 
   const handleMapClick = async (event) => {
     const { lat, lng } = event.lngLat;
@@ -60,25 +62,16 @@ function App() {
     <>
       <form>
         <select
-          onChange={(e) => setSelectedMonth(e.target.value)}
-          value={selectedMonth}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          value={selectedCategory}
         >
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-          <option value="5">May</option>
-          <option value="6">June</option>
-          <option value="7">July</option>
-          <option value="8">August</option>
-          <option value="9">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
+          {categories.map((cat) => {
+            return <option value={cat}>{cat}</option>;
+          })}
         </select>
         <select
-          onChange={(e) => setSelectedKingdom(e.target.value)}
-          value={selectedKingdom}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          value={selectedCategory}
         >
           <option value="Animal">Animal</option>
           <option value="2">Funghi</option>

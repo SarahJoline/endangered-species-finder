@@ -1,11 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Map from "react-map-gl";
 import "./App.css";
 import Card from "./components/Card";
 
 function App() {
   const [selectedMonth, setSelectedMonth] = useState(1);
+  const [speciesList, setSpeciesList] = useState([]);
+  const [categories, setCatergory] = useState([]);
+
+  const [selectedKingdom, setSelectedKingdom] = useState("");
   const [species, setSpecies] = useState([]);
+
+  const handleSearch = async (e) => {
+    // e.preventDefault();
+    const response = await fetch(`/species/bear`);
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
+    // setSpeciesList(data);
+  };
+
+  handleSearch();
+
+  async function fetchCategories() {
+    const response = await fetch("api/species/categories");
+
+    const data = await response.json();
+
+    setCatergory(data);
+  }
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const handleMapClick = async (event) => {
     const { lat, lng } = event.lngLat;
     const latitude =
@@ -49,7 +76,16 @@ function App() {
           <option value="11">November</option>
           <option value="12">December</option>
         </select>
+        <select
+          onChange={(e) => setSelectedKingdom(e.target.value)}
+          value={selectedKingdom}
+        >
+          <option value="Animal">Animal</option>
+          <option value="2">Funghi</option>
+          <option value="3">Plant</option>
+        </select>
       </form>
+
       <div style={{ width: "80vw", height: "80vh" }}>
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}

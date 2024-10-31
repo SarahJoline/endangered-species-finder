@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run frontend\"",
-    "server": "cd server && node index.js",
+    "server": "cd backend && npm start",
     "frontend": "cd frontend && npm start"
   },
   "keywords": [],

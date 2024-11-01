@@ -8,8 +8,6 @@ const StyledButton = styled.button`
 `;
 
 function card({ sp }) {
-  console.log(sp);
-
   return (
     <div key={sp.taxonomy.id}>
       <StyledButton>

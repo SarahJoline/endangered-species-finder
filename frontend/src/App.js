@@ -9,6 +9,7 @@ function App() {
   const [categories, setCatergory] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [speciesFilter, setSpeciesFilter] = useState("");
   const [species, setSpecies] = useState([]);
 
   const handleSearch = async () => {
@@ -52,6 +53,8 @@ function App() {
     }
   };
 
+  console.log(speciesFilter);
+
   useEffect(() => {
     handleSearch();
   }, [selectedCategory]);
@@ -66,6 +69,11 @@ function App() {
             return <option value={cat}>{cat}</option>;
           })}
         </select>
+        <input
+          type="text"
+          value={speciesFilter}
+          onChange={(e) => setSpeciesFilter(e.target.value)}
+        />
       </form>
 
       <div style={{ width: "80vw", height: "80vh" }}>
@@ -82,7 +90,6 @@ function App() {
           onClick={handleMapClick}
         />
       </div>
-      <input type="text" />
       {speciesList.map((sp) => (
         <Card sp={sp} />
       ))}

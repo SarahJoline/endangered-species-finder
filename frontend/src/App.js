@@ -11,19 +11,15 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [species, setSpecies] = useState([]);
 
-  const handleSearch = async (e) => {
-    // e.preventDefault();
-    const response = await fetch(`/species/bear`);
-    console.log(response);
+  const handleSearch = async () => {
+    const response = await fetch(`/api/species/${selectedCategory}`);
     const data = await response.json();
     console.log(data);
-    // setSpeciesList(data);
+    setSpeciesList(data);
   };
-  console.log(categories);
-  handleSearch();
 
   async function fetchCategories() {
-    const response = await fetch("api/species/categories");
+    const response = await fetch("/api/species/categories");
 
     const data = await response.json();
 
@@ -58,6 +54,10 @@ function App() {
       console.error("Error fetching species data:", error);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [selectedCategory]);
   return (
     <>
       <form>
@@ -68,14 +68,6 @@ function App() {
           {categories.map((cat) => {
             return <option value={cat}>{cat}</option>;
           })}
-        </select>
-        <select
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          value={selectedCategory}
-        >
-          <option value="Animal">Animal</option>
-          <option value="2">Funghi</option>
-          <option value="3">Plant</option>
         </select>
       </form>
 
@@ -93,7 +85,7 @@ function App() {
           onClick={handleMapClick}
         />
       </div>
-      {species.map((sp) => (
+      {speciesList.map((sp) => (
         <Card sp={sp} />
       ))}
     </>

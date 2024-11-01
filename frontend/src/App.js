@@ -14,7 +14,6 @@ function App() {
   const handleSearch = async () => {
     const response = await fetch(`/api/species/${selectedCategory}`);
     const data = await response.json();
-    console.log(data);
     setSpeciesList(data);
   };
 
@@ -28,8 +27,6 @@ function App() {
   useEffect(() => {
     fetchCategories();
   }, []);
-
-  console.log(categories);
 
   const handleMapClick = async (event) => {
     const { lat, lng } = event.lngLat;

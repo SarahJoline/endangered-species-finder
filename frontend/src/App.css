@@ -10,3 +10,12 @@
 .mapboxgl-ctrl-attrib-inner {
   display: none;
 }
+
+.mapboxgl-control-container {
+  display: none;
+  height: 0;
+}
+
+[mapboxgl-children] {
+  display: none;
+}

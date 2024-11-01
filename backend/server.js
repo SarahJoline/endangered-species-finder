@@ -28,7 +28,6 @@ app.get("/api/species/:name", (req, res) => {
   if (speciesData.length === 0) {
     return res.status(503).json({ error: "Species data not loaded yet." });
   }
-  console.log(req.params);
   const commonName = req.params.name;
   const filteredSpecies = speciesData.filter((species) =>
     species.category_name.toLowerCase().includes(commonName.toLowerCase())

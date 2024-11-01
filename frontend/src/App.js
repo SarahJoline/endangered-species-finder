@@ -82,6 +82,7 @@ function App() {
           onClick={handleMapClick}
         />
       </div>
+      <input type="text" />
       {speciesList.map((sp) => (
         <Card sp={sp} />
       ))}

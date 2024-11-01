@@ -24,13 +24,14 @@ app.get("/api/species/categories", (req, res) => {
 
   res.json(uniqueCategoryNames);
 });
-app.get("/species/:name", (req, res) => {
+app.get("/api/species/:name", (req, res) => {
   if (speciesData.length === 0) {
     return res.status(503).json({ error: "Species data not loaded yet." });
   }
-  const commonName = "bear"; // Get name from query
+  console.log(req.params);
+  const commonName = req.params.name;
   const filteredSpecies = speciesData.filter((species) =>
-    species.common_name.toLowerCase().includes(commonName.toLowerCase())
+    species.category_name.toLowerCase().includes(commonName.toLowerCase())
   );
   res.json(filteredSpecies);
 });

@@ -10,7 +10,7 @@ function App() {
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [speciesSearch, setSpeciesSearch] = useState("");
-  const [filteredSpecies, setFilteredSpecies] = useState("");
+  const [filteredSpecies, setFilteredSpecies] = useState([]);
 
   const [species, setSpecies] = useState([]);
 
@@ -64,7 +64,9 @@ function App() {
   console.log(searchSpeciesByCommonName);
 
   useEffect(() => {
-    searchSpeciesByCommonName();
+    const result = searchSpeciesByCommonName();
+
+    setFilteredSpecies(result);
   }, [speciesSearch]);
 
   console.log(speciesList);
@@ -105,9 +107,9 @@ function App() {
         />
       </form>
 
-      {speciesList.map((sp) => (
-        <Card sp={sp} />
-      ))}
+      {filteredSpecies.length !== 0
+        ? filteredSpecies.map((sp) => <Card key={sp.id} sp={sp} />) // Render filtered species
+        : speciesList.map((sp) => <Card key={sp.id} sp={sp} />)}
     </>
   );
 }

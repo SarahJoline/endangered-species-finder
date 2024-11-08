@@ -11,6 +11,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [speciesSearch, setSpeciesSearch] = useState("");
   const [filteredSpecies, setFilteredSpecies] = useState([]);
+  const [selectedSpecies, setSelectedSpecies] = useState("");
 
   const [species, setSpecies] = useState([]);
 
@@ -44,7 +45,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}`
+        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&scientificName=${selectedSpecies}`
       );
       const data = await response.json();
 
@@ -61,19 +62,16 @@ function App() {
     );
   };
 
-  console.log(searchSpeciesByCommonName);
-
   useEffect(() => {
     const result = searchSpeciesByCommonName();
 
     setFilteredSpecies(result);
   }, [speciesSearch]);
 
-  console.log(speciesList);
-
   useEffect(() => {
     handleSearch();
   }, [selectedCategory]);
+
   return (
     <>
       <div style={{ width: "80vw", height: "80vh" }}>
@@ -112,8 +110,12 @@ function App() {
       </form>
 
       {speciesSearch.length
-        ? filteredSpecies.map((sp) => <Card key={sp.id} sp={sp} />) // Render filtered species
-        : speciesList.map((sp) => <Card key={sp.id} sp={sp} />)}
+        ? filteredSpecies.map((sp) => (
+            <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
+          )) // Render filtered species
+        : speciesList.map((sp) => (
+            <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
+          ))}
     </>
   );
 }

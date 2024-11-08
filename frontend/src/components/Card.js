@@ -7,10 +7,10 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-function card({ sp, handleClick }) {
+function card({ sp, setSelectedSpecies }) {
   return (
     <div key={sp.taxonomy.id}>
-      <StyledButton onClick={handleClick}>
+      <StyledButton onClick={() => setSelectedSpecies(sp.taxonomy.species)}>
         {sp.common_name} ({sp.taxonomy.species})
       </StyledButton>
     </div>

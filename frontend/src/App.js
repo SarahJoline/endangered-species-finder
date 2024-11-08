@@ -45,12 +45,47 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&scientificName=${selectedSpecies}`
+        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&iucnRedListCategory=NE&iucnRedListCategory=CE&limit=300`
       );
       const data = await response.json();
+      console.log(data);
+      const uniqueSpecies = data.results.reduce((acc, current) => {
+        if (!acc.some((item) => item.species === current.species)) {
+          acc.push(current);
+        }
+        return acc;
+      }, []);
 
-      console.log(data.results);
-      setSpecies(data.results);
+      const groupedBySpeciesArray = Object.values(
+        data.results.reduce((acc, current) => {
+          console.log(current);
+          const speciesName = current?.species;
+
+          // If the species isn't already a key in the accumulator, add it
+          if (!acc[speciesName]) {
+            acc[speciesName] = {
+              species: speciesName,
+              media: current.media || [], // Include the media field
+              occurrences: [], // Initialize the occurrences array
+            };
+          }
+
+          // Push the current occurrence to the species' occurrences array
+          acc[speciesName].occurrences.push({
+            month: current.month,
+            day: current.day,
+            year: current.year,
+            decimalLatitude: current.decimalLatitude,
+            decimalLongitude: current.decimalLongitude,
+          });
+
+          return acc;
+        }, {})
+      );
+
+      console.log(groupedBySpeciesArray);
+      console.log(uniqueSpecies);
+      setSpecies(groupedBySpeciesArray);
     } catch (error) {
       console.error("Error fetching species data:", error);
     }
@@ -67,10 +102,6 @@ function App() {
 
     setFilteredSpecies(result);
   }, [speciesSearch]);
-
-  useEffect(() => {
-    handleSearch();
-  }, [selectedCategory]);
 
   return (
     <>
@@ -108,14 +139,16 @@ function App() {
           </>
         )}
       </form>
-
-      {speciesSearch.length
+      {species.map((sp) => (
+        <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
+      ))}
+      {/* {speciesSearch.length
         ? filteredSpecies.map((sp) => (
             <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
           )) // Render filtered species
         : speciesList.map((sp) => (
             <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
-          ))}
+          ))} */}
     </>
   );
 }

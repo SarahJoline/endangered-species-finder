@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Map from "react-map-gl";
+import Map, { Marker } from "react-map-gl";
 import "./App.css";
 import Card from "./components/Card";
 
@@ -15,6 +15,7 @@ function App() {
 
   const [species, setSpecies] = useState([]);
 
+  // RIP TO THIS BIT OF CODE I WROTE
   const handleSearch = async () => {
     const response = await fetch(`/api/species/${selectedCategory}`);
     const data = await response.json();
@@ -75,8 +76,8 @@ function App() {
             month: current.month,
             day: current.day,
             year: current.year,
-            decimalLatitude: current.decimalLatitude,
-            decimalLongitude: current.decimalLongitude,
+            latitude: current.decimalLatitude,
+            longitude: current.decimalLongitude,
           });
 
           return acc;
@@ -103,6 +104,29 @@ function App() {
     setFilteredSpecies(result);
   }, [speciesSearch]);
 
+  const renderMarkers = () => {
+    return species.map((sp) => {
+      console.log(sp);
+      return sp.occurrences.map((occurrence, index) => (
+        <Marker
+          key={`${sp.species}-${index}`} // Ensure unique key
+          latitude={occurrence.latitude}
+          longitude={occurrence.longitude}
+        >
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              backgroundColor: "red", // Customize the marker color
+              borderRadius: "50%",
+              cursor: "pointer",
+            }}
+          ></div>
+        </Marker>
+      ));
+    });
+  };
+
   return (
     <>
       <div style={{ width: "80vw", height: "80vh" }}>
@@ -117,7 +141,9 @@ function App() {
           width="100%"
           height="100%"
           onClick={handleMapClick}
-        />
+        >
+          {renderMarkers()}
+        </Map>
       </div>
       <form>
         <select

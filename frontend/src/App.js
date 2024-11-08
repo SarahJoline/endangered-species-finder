@@ -9,7 +9,9 @@ function App() {
   const [categories, setCatergory] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [speciesFilter, setSpeciesFilter] = useState("");
+  const [speciesSearch, setSpeciesSearch] = useState("");
+  const [filteredSpecies, setFilteredSpecies] = useState("");
+
   const [species, setSpecies] = useState([]);
 
   const handleSearch = async () => {
@@ -53,29 +55,25 @@ function App() {
     }
   };
 
-  console.log(speciesFilter);
+  const searchSpeciesByCommonName = () => {
+    return speciesList.filter(({ common_name }) =>
+      common_name.includes(speciesSearch)
+    );
+  };
+
+  console.log(searchSpeciesByCommonName);
+
+  useEffect(() => {
+    searchSpeciesByCommonName();
+  }, [speciesSearch]);
+
+  console.log(speciesList);
 
   useEffect(() => {
     handleSearch();
   }, [selectedCategory]);
   return (
     <>
-      <form>
-        <select
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          value={selectedCategory}
-        >
-          {categories.map((cat) => {
-            return <option value={cat}>{cat}</option>;
-          })}
-        </select>
-        <input
-          type="text"
-          value={speciesFilter}
-          onChange={(e) => setSpeciesFilter(e.target.value)}
-        />
-      </form>
-
       <div style={{ width: "80vw", height: "80vh" }}>
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
@@ -90,6 +88,23 @@ function App() {
           onClick={handleMapClick}
         />
       </div>
+      <form>
+        <select
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          value={selectedCategory}
+        >
+          {categories.map((cat) => {
+            return <option value={cat}>{cat}</option>;
+          })}
+        </select>
+        You have a lot of options! Let's narrow it down:
+        <input
+          type="text"
+          value={speciesSearch}
+          onChange={(e) => setSpeciesSearch(e.target.value)}
+        />
+      </form>
+
       {speciesList.map((sp) => (
         <Card sp={sp} />
       ))}

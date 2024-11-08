@@ -6,7 +6,6 @@ import Card from "./components/Card";
 function App() {
   const [selectedMonth, setSelectedMonth] = useState(1);
   const [speciesList, setSpeciesList] = useState([]);
-  const [categories, setCatergory] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [speciesSearch, setSpeciesSearch] = useState("");
@@ -14,24 +13,6 @@ function App() {
   const [selectedSpecies, setSelectedSpecies] = useState("");
 
   const [species, setSpecies] = useState([]);
-
-  // RIP TO THIS BIT OF CODE I WROTE
-  const handleSearch = async () => {
-    const response = await fetch(`/api/species/${selectedCategory}`);
-    const data = await response.json();
-    setSpeciesList(data);
-  };
-
-  async function fetchCategories() {
-    const response = await fetch("/api/species/categories");
-
-    const data = await response.json();
-
-    setCatergory(data);
-  }
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const handleMapClick = async (event) => {
     const { lat, lng } = event.lngLat;
@@ -49,7 +30,6 @@ function App() {
         `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&iucnRedListCategory=NE&iucnRedListCategory=CE&limit=300`
       );
       const data = await response.json();
-      console.log(data);
       const uniqueSpecies = data.results.reduce((acc, current) => {
         if (!acc.some((item) => item.species === current.species)) {
           acc.push(current);
@@ -145,7 +125,7 @@ function App() {
           {renderMarkers()}
         </Map>
       </div>
-      <form>
+      {/* <form>
         <select
           onChange={(e) => setSelectedCategory(e.target.value)}
           value={selectedCategory}
@@ -164,17 +144,10 @@ function App() {
             />
           </>
         )}
-      </form>
+      </form> */}
       {species.map((sp) => (
         <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
       ))}
-      {/* {speciesSearch.length
-        ? filteredSpecies.map((sp) => (
-            <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
-          )) // Render filtered species
-        : speciesList.map((sp) => (
-            <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
-          ))} */}
     </>
   );
 }

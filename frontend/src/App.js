@@ -99,12 +99,16 @@ function App() {
             return <option value={cat}>{cat}</option>;
           })}
         </select>
-        You have a lot of options! Let's narrow it down:
-        <input
-          type="text"
-          value={speciesSearch}
-          onChange={(e) => setSpeciesSearch(e.target.value)}
-        />
+        {speciesList.length !== 0 && (
+          <>
+            <label>You have a lot of options! Let's narrow it down:</label>
+            <input
+              type="text"
+              value={speciesSearch}
+              onChange={(e) => setSpeciesSearch(e.target.value)}
+            />
+          </>
+        )}
       </form>
 
       {filteredSpecies.length !== 0

@@ -111,7 +111,7 @@ function App() {
         )}
       </form>
 
-      {filteredSpecies.length !== 0
+      {speciesSearch.length
         ? filteredSpecies.map((sp) => <Card key={sp.id} sp={sp} />) // Render filtered species
         : speciesList.map((sp) => <Card key={sp.id} sp={sp} />)}
     </>

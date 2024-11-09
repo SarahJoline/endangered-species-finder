@@ -133,15 +133,12 @@ function App() {
                     latitude={occurrence.latitude}
                     longitude={occurrence.longitude}
                   >
-                    <div
-                      style={{
-                        width: "20px",
-                        height: "20px",
-                        backgroundColor: "blue",
-                        borderRadius: "50%",
-                        cursor: "pointer",
-                      }}
-                    ></div>
+                    <img
+                      src="/drop-pin.svg"
+                      alt="Drop Pin"
+                      height="20"
+                      width="20"
+                    />
                   </Marker>
                 )
             )

@@ -1,3 +1,4 @@
+import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useEffect, useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import "./App.css";
@@ -118,11 +119,33 @@ function App() {
             zoom: 1,
           }}
           mapStyle="mapbox://styles/mapbox/streets-v11"
-          width="100%"
-          height="100%"
+          width="80%"
+          height="80%"
           onClick={handleMapClick}
         >
-          {renderMarkers()}
+          {species.map((sp) =>
+            sp.occurrences.map(
+              (occurrence, index) =>
+                occurrence.latitude &&
+                occurrence.longitude && (
+                  <Marker
+                    key={`${sp.species}-${index}`}
+                    latitude={occurrence.latitude}
+                    longitude={occurrence.longitude}
+                  >
+                    <div
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        backgroundColor: "blue",
+                        borderRadius: "50%",
+                        cursor: "pointer",
+                      }}
+                    ></div>
+                  </Marker>
+                )
+            )
+          )}
         </Map>
       </div>
       {/* <form>

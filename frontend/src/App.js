@@ -1,16 +1,10 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import "./App.css";
 import Card from "./components/Card";
 
 function App() {
-  const [selectedMonth, setSelectedMonth] = useState(1);
-  const [speciesList, setSpeciesList] = useState([]);
-
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [speciesSearch, setSpeciesSearch] = useState("");
-  const [filteredSpecies, setFilteredSpecies] = useState([]);
   const [selectedSpecies, setSelectedSpecies] = useState("");
 
   const [species, setSpecies] = useState([]);
@@ -72,18 +66,6 @@ function App() {
       console.error("Error fetching species data:", error);
     }
   };
-
-  const searchSpeciesByCommonName = () => {
-    return speciesList.filter(({ common_name }) =>
-      common_name.includes(speciesSearch)
-    );
-  };
-
-  useEffect(() => {
-    const result = searchSpeciesByCommonName();
-
-    setFilteredSpecies(result);
-  }, [speciesSearch]);
 
   return (
     <>

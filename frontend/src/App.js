@@ -97,6 +97,8 @@ function App() {
                       alt="Drop Pin"
                       height="20"
                       width="20"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => console.log("Hello")}
                     />
                   </Marker>
                 )

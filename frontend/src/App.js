@@ -85,29 +85,6 @@ function App() {
     setFilteredSpecies(result);
   }, [speciesSearch]);
 
-  const renderMarkers = () => {
-    return species.map((sp) => {
-      console.log(sp);
-      return sp.occurrences.map((occurrence, index) => (
-        <Marker
-          key={`${sp.species}-${index}`} // Ensure unique key
-          latitude={occurrence.latitude}
-          longitude={occurrence.longitude}
-        >
-          <div
-            style={{
-              width: "10px",
-              height: "10px",
-              backgroundColor: "red", // Customize the marker color
-              borderRadius: "50%",
-              cursor: "pointer",
-            }}
-          ></div>
-        </Marker>
-      ));
-    });
-  };
-
   return (
     <>
       <div style={{ width: "80vw", height: "80vh" }}>

@@ -1,12 +1,14 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useRef, useState } from "react";
 import Map, { Marker } from "react-map-gl";
+
 import "./App.css";
 import Card from "./components/Card";
 
 function App() {
   const markersRef = useRef([]);
   const [selectedSpecies, setSelectedSpecies] = useState("");
+  const [renderTrigger, setRenderTrigger] = useState(false);
 
   const [species, setSpecies] = useState([]);
 
@@ -63,6 +65,12 @@ function App() {
       console.log(groupedBySpeciesArray);
       console.log(uniqueSpecies);
       setSpecies(groupedBySpeciesArray);
+
+      // Append new data to the markersRef
+      markersRef.current = [...markersRef.current, ...groupedBySpeciesArray];
+
+      // Trigger a re-render
+      setRenderTrigger((prev) => !prev);
     } catch (error) {
       console.error("Error fetching species data:", error);
     }
@@ -127,7 +135,7 @@ function App() {
           </>
         )}
       </form> */}
-      {species.map((sp) => (
+      {markersRef.current.map((sp) => (
         <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
       ))}
     </>

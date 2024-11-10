@@ -1,10 +1,11 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import "./App.css";
 import Card from "./components/Card";
 
 function App() {
+  const markersRef = useRef([]);
   const [selectedSpecies, setSelectedSpecies] = useState("");
 
   const [species, setSpecies] = useState([]);

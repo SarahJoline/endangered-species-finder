@@ -72,9 +72,17 @@ function App() {
       // Trigger a re-render
       setRenderTrigger((prev) => !prev);
     } catch (error) {
-      console.error("Error fetching species data:", error);
+      console.error("Error fetching occurence data:", error);
     }
   };
+
+  async function getSpeciesInfo(species) {
+    console.log(species);
+    try {
+    } catch (error) {
+      console.error("Error fetching species data:", error);
+    }
+  }
 
   return (
     <>
@@ -107,7 +115,7 @@ function App() {
                       height="20"
                       width="20"
                       style={{ cursor: "pointer" }}
-                      onClick={() => console.log("Hello")}
+                      onClick={() => getSpeciesInfo(sp.species)}
                     />
                   </Marker>
                 )

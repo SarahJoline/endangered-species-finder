@@ -67,7 +67,7 @@ function App() {
       setSpecies(groupedBySpeciesArray);
 
       // Append new data to the markersRef
-      markersRef.current = [...markersRef.current, ...groupedBySpeciesArray];
+      markersRef.current = [...markersRef.current, groupedBySpeciesArray];
 
       // Trigger a re-render
       setRenderTrigger((prev) => !prev);
@@ -79,6 +79,35 @@ function App() {
   async function getSpeciesInfo(species) {
     console.log(species);
     try {
+      const apiUrl = "https://explorer.natureserve.org/api/data/speciesSearch";
+
+      // Create the request body
+      const requestBody = {
+        criteriaType: "species",
+        speciesTaxonomyCriteria: [
+          {
+            paramType: "scientificTaxonomy",
+            scientificTaxonomy: species,
+          },
+        ],
+      };
+
+      // Perform the POST request
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      // Parse and log the response data
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.error("Error fetching species data:", error);
     }

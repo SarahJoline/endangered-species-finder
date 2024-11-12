@@ -44,6 +44,7 @@ function App() {
           if (!acc[speciesName]) {
             acc[speciesName] = {
               species: speciesName,
+              kingdom: current.kingdom,
               media: current.media || [], // Include the media field
               occurrences: [], // Initialize the occurrences array
             };

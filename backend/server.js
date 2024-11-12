@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 require("dotenv").config();
 const commonSpecies = require("common-species");
 
@@ -34,6 +35,42 @@ app.get("/api/species/:name", (req, res) => {
   );
   res.json(filteredSpecies);
 });
+
+app.get("/api/speciesSearch/:scientificTaxonomy", async (req, res) => {
+  try {
+    const response = await axios.get(
+      `https://en.wikipedia.org/api/rest_v1/page/summary/${req.params.scientificTaxonomy}`
+    );
+    console.log(response);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// app.post("/api/speciesSearch", async (req, res) => {
+//   console.log(req.body);
+//   try {
+//     const response = await axios.post(
+//       "https://explorer.natureserve.org/api/data/speciesSearch",
+//       {
+//         criteriaType: "species",
+//         speciesTaxonomyCriteria: [
+//           {
+//             paramType: "scientificTaxonomy",
+//             level: "GENUS",
+//             scientificTaxonomy: req.body.scientificTaxonomy.split(" ")[0],
+//             kingdom: req.body.kingdom,
+//           },
+//         ],
+//       }
+//     );
+//     console.log(response);
+//     res.json(response.data);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
 
 // Start the server
 app.listen(PORT, () => {

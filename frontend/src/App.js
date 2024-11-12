@@ -37,7 +37,6 @@ function App() {
 
       const groupedBySpeciesArray = Object.values(
         data.results.reduce((acc, current) => {
-          console.log(current);
           const speciesName = current?.species;
 
           // If the species isn't already a key in the accumulator, add it
@@ -62,8 +61,6 @@ function App() {
         }, {})
       );
 
-      console.log(groupedBySpeciesArray);
-      console.log(uniqueSpecies);
       setSpecies(groupedBySpeciesArray);
 
       // Append new data to the markersRef
@@ -76,36 +73,15 @@ function App() {
     }
   };
 
-  async function getSpeciesInfo(species) {
-    console.log(species);
+  async function getSpeciesInfo(sp) {
+    console.log(sp);
     try {
-      const apiUrl = "https://explorer.natureserve.org/api/data/speciesSearch";
-
-      // Create the request body
-      const requestBody = {
-        criteriaType: "species",
-        speciesTaxonomyCriteria: [
-          {
-            paramType: "scientificTaxonomy",
-            scientificTaxonomy: species,
-          },
-        ],
-      };
-
-      // Perform the POST request
-      const response = await fetch(apiUrl, {
-        method: "POST",
+      const response = await fetch(`/api/speciesSearch/${sp.species}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody),
       });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      // Parse and log the response data
       const data = await response.json();
       console.log(data);
     } catch (error) {
@@ -128,8 +104,8 @@ function App() {
           height="80%"
           onClick={handleMapClick}
         >
-          {species.map((sp) =>
-            sp.occurrences.map(
+          {species.map((sp) => {
+            return sp.occurrences.map(
               (occurrence, index) =>
                 occurrence.latitude &&
                 occurrence.longitude && (
@@ -144,12 +120,12 @@ function App() {
                       height="20"
                       width="20"
                       style={{ cursor: "pointer" }}
-                      onClick={() => getSpeciesInfo(sp.species)}
+                      onClick={() => getSpeciesInfo(sp)}
                     />
                   </Marker>
                 )
-            )
-          )}
+            );
+          })}
         </Map>
       </div>
       {/* <form>

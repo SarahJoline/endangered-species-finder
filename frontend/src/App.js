@@ -45,7 +45,6 @@ function App() {
             acc[speciesName] = {
               species: speciesName,
               kingdom: current.kingdom,
-              media: current.media || [], // Include the media field
               occurrences: [], // Initialize the occurrences array
             };
           }

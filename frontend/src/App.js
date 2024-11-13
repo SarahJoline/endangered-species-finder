@@ -136,7 +136,7 @@ function App() {
           })}
         </Map>
       </div>
-      {<div></div>}
+      {Object.keys(selectedSpecies).length !== 0 && <div>Hello</div>}
       {/* {markersRef.current.map((sp) => (
         <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
       ))} */}

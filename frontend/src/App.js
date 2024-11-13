@@ -11,11 +11,6 @@ import Card from "./components/Card";
 function App() {
   const markersRef = useRef([]);
   const [selectedSpecies, setSelectedSpecies] = useState("");
-  const [hoverState, setHoverState] = useState({
-    isHovered: false,
-    data: {},
-  });
-  console.log(hoverState);
 
   const [renderTrigger, setRenderTrigger] = useState(false);
 
@@ -115,11 +110,6 @@ function App() {
           height="80%"
           onClick={handleMapClick}
         >
-          {hoverState.isHovered && (
-            <div>
-              <p>{hoverState.data.species}</p>
-            </div>
-          )}
           {species.map((sp) => {
             return sp.occurrences.map(
               (occurrence, index) =>
@@ -139,12 +129,6 @@ function App() {
                       data-tooltip-content={sp.species}
                       style={{ cursor: "pointer" }}
                       onClick={() => getSpeciesInfo(sp)}
-                      onMouseEnter={() =>
-                        setHoverState({ isHovered: true, data: sp })
-                      }
-                      onMouseLeave={() =>
-                        setHoverState({ isHovered: false, data: {} })
-                      }
                     />
                     <Tooltip id="my-tooltip" />
                   </Marker>

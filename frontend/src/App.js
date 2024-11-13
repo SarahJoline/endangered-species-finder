@@ -6,11 +6,10 @@ import Map, { Marker } from "react-map-gl";
 import { Tooltip } from "react-tooltip";
 
 import "./App.css";
-import Card from "./components/Card";
 
 function App() {
   const markersRef = useRef([]);
-  const [selectedSpecies, setSelectedSpecies] = useState("");
+  const [selectedSpecies, setSelectedSpecies] = useState({});
 
   const [renderTrigger, setRenderTrigger] = useState(false);
 
@@ -87,7 +86,7 @@ function App() {
         },
       });
       const data = await response.json();
-      console.log(data);
+      setSelectedSpecies(data);
     } catch (error) {
       console.error("Error fetching species data:", error);
     }
@@ -137,10 +136,10 @@ function App() {
           })}
         </Map>
       </div>
-
-      {markersRef.current.map((sp) => (
+      {<div></div>}
+      {/* {markersRef.current.map((sp) => (
         <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
-      ))}
+      ))} */}
     </>
   );
 }

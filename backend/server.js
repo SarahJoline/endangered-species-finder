@@ -13,7 +13,6 @@ app.get("/api/speciesSearch/:scientificTaxonomy", async (req, res) => {
     const response = await axios.get(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${req.params.scientificTaxonomy}`
     );
-    console.log(response);
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ message: error.message });

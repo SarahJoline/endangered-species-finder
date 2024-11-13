@@ -140,7 +140,11 @@ function App() {
         <>
           {" "}
           {selectedSpecies.originalimage && (
-            <img src={selectedSpecies.originalimage.source} />
+            <img
+              width="300"
+              height="300"
+              src={selectedSpecies.originalimage.source}
+            />
           )}
           <h1>{selectedSpecies.title}</h1>
           <h2>{selectedSpecies.description}</h2>

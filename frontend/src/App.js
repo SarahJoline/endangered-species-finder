@@ -137,26 +137,7 @@ function App() {
           })}
         </Map>
       </div>
-      {/* <form>
-        <select
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          value={selectedCategory}
-        >
-          {categories.map((cat) => {
-            return <option value={cat}>{cat}</option>;
-          })}
-        </select>
-        {speciesList.length !== 0 && (
-          <>
-            <label>You have a lot of options! Let's narrow it down:</label>
-            <input
-              type="text"
-              value={speciesSearch}
-              onChange={(e) => setSpeciesSearch(e.target.value)}
-            />
-          </>
-        )}
-      </form> */}
+
       {markersRef.current.map((sp) => (
         <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
       ))}

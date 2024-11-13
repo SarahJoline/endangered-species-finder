@@ -4,6 +4,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import React, { useRef, useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import { Tooltip } from "react-tooltip";
+import Drawer from "./components/Drawer";
 
 import "./App.css";
 
@@ -136,21 +137,7 @@ function App() {
           })}
         </Map>
       </div>
-      {Object.keys(selectedSpecies).length !== 0 && (
-        <>
-          {" "}
-          {selectedSpecies.originalimage && (
-            <img
-              width="300"
-              height="300"
-              src={selectedSpecies.originalimage.source}
-            />
-          )}
-          <h1>{selectedSpecies.title}</h1>
-          <h2>{selectedSpecies.description}</h2>
-          <p>{selectedSpecies.extract}</p>
-        </>
-      )}
+      <Drawer selectedSpecies={selectedSpecies} />
       {/* {markersRef.current.map((sp) => (
         <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
       ))} */}

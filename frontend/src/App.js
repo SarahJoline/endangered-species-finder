@@ -8,6 +8,12 @@ import Card from "./components/Card";
 function App() {
   const markersRef = useRef([]);
   const [selectedSpecies, setSelectedSpecies] = useState("");
+  const [hoverState, setHoverState] = useState({
+    isHovered: false,
+    data: {},
+  });
+  console.log(hoverState);
+
   const [renderTrigger, setRenderTrigger] = useState(false);
 
   const [species, setSpecies] = useState([]);
@@ -121,6 +127,12 @@ function App() {
                       width="20"
                       style={{ cursor: "pointer" }}
                       onClick={() => getSpeciesInfo(sp)}
+                      onMouseEnter={() =>
+                        setHoverState({ isHovered: true, data: sp })
+                      }
+                      onMouseLeave={() =>
+                        setHoverState({ isHovered: true, data: sp })
+                      }
                     />
                   </Marker>
                 )

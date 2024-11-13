@@ -138,9 +138,6 @@ function App() {
         </Map>
       </div>
       <Drawer selectedSpecies={selectedSpecies} />
-      {/* {markersRef.current.map((sp) => (
-        <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
-      ))} */}
     </>
   );
 }

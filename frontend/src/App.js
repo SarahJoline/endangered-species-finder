@@ -131,7 +131,7 @@ function App() {
                         setHoverState({ isHovered: true, data: sp })
                       }
                       onMouseLeave={() =>
-                        setHoverState({ isHovered: true, data: sp })
+                        setHoverState({ isHovered: false, data: {} })
                       }
                     />
                   </Marker>

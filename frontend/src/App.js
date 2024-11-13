@@ -92,7 +92,7 @@ function App() {
     }
   }
 
-  console.log(species);
+  console.log(selectedSpecies);
 
   return (
     <>
@@ -136,7 +136,17 @@ function App() {
           })}
         </Map>
       </div>
-      {Object.keys(selectedSpecies).length !== 0 && <div>Hello</div>}
+      {Object.keys(selectedSpecies).length !== 0 && (
+        <>
+          {" "}
+          {selectedSpecies.originalimage && (
+            <img src={selectedSpecies.originalimage.source} />
+          )}
+          <h1>{selectedSpecies.title}</h1>
+          <h2>{selectedSpecies.description}</h2>
+          <p>{selectedSpecies.extract}</p>
+        </>
+      )}
       {/* {markersRef.current.map((sp) => (
         <Card key={sp.id} sp={sp} setSelectedSpecies={setSelectedSpecies} />
       ))} */}

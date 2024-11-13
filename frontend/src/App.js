@@ -1,7 +1,7 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-tooltip/dist/react-tooltip.css";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import { Tooltip } from "react-tooltip";
 import Drawer from "./components/Drawer";
@@ -9,10 +9,7 @@ import Drawer from "./components/Drawer";
 import "./App.css";
 
 function App() {
-  const markersRef = useRef([]);
   const [selectedSpecies, setSelectedSpecies] = useState({});
-
-  const [renderTrigger, setRenderTrigger] = useState(false);
 
   const [species, setSpecies] = useState([]);
 
@@ -66,12 +63,6 @@ function App() {
       );
 
       setSpecies(groupedBySpeciesArray);
-
-      // Append new data to the markersRef
-      markersRef.current = [...markersRef.current, groupedBySpeciesArray];
-
-      // Trigger a re-render
-      setRenderTrigger((prev) => !prev);
     } catch (error) {
       console.error("Error fetching occurence data:", error);
     }

@@ -1,6 +1,9 @@
 import "mapbox-gl/dist/mapbox-gl.css";
+import "react-tooltip/dist/react-tooltip.css";
+
 import React, { useRef, useState } from "react";
 import Map, { Marker } from "react-map-gl";
+import { Tooltip } from "react-tooltip";
 
 import "./App.css";
 import Card from "./components/Card";
@@ -95,6 +98,8 @@ function App() {
     }
   }
 
+  console.log(species);
+
   return (
     <>
       <div style={{ width: "80vw", height: "80vh" }}>
@@ -110,6 +115,11 @@ function App() {
           height="80%"
           onClick={handleMapClick}
         >
+          {hoverState.isHovered && (
+            <div>
+              <p>{hoverState.data.species}</p>
+            </div>
+          )}
           {species.map((sp) => {
             return sp.occurrences.map(
               (occurrence, index) =>
@@ -125,6 +135,8 @@ function App() {
                       alt="Drop Pin"
                       height="20"
                       width="20"
+                      data-tooltip-id="my-tooltip"
+                      data-tooltip-content={sp.species}
                       style={{ cursor: "pointer" }}
                       onClick={() => getSpeciesInfo(sp)}
                       onMouseEnter={() =>
@@ -134,6 +146,7 @@ function App() {
                         setHoverState({ isHovered: false, data: {} })
                       }
                     />
+                    <Tooltip id="my-tooltip" />
                   </Marker>
                 )
             );

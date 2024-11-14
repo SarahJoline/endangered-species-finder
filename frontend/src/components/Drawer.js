@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Portal from "./Portal";
 
 const StyledDrawer = styled.aside`
   position: fixed;
@@ -17,24 +18,26 @@ const StyledDrawer = styled.aside`
 
 function Drawer({ selectedSpecies }) {
   return (
-    <StyledDrawer>
-      {" "}
-      {Object.keys(selectedSpecies).length !== 0 && (
-        <>
-          {" "}
-          {selectedSpecies.originalimage && (
-            <img
-              width="300"
-              height="300"
-              src={selectedSpecies.originalimage.source}
-            />
-          )}
-          <h1>{selectedSpecies.title}</h1>
-          <h2>{selectedSpecies.description}</h2>
-          <p>{selectedSpecies.extract}</p>
-        </>
-      )}
-    </StyledDrawer>
+    <Portal>
+      <StyledDrawer>
+        {" "}
+        {Object.keys(selectedSpecies).length !== 0 && (
+          <>
+            {" "}
+            {selectedSpecies.originalimage && (
+              <img
+                width="300"
+                height="300"
+                src={selectedSpecies.originalimage.source}
+              />
+            )}
+            <h1>{selectedSpecies.title}</h1>
+            <h2>{selectedSpecies.description}</h2>
+            <p>{selectedSpecies.extract}</p>
+          </>
+        )}
+      </StyledDrawer>
+    </Portal>
   );
 }
 

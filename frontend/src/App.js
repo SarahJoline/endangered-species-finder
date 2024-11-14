@@ -10,7 +10,7 @@ import "./App.css";
 
 function App() {
   const [selectedSpecies, setSelectedSpecies] = useState({});
-
+  const [error, setError] = useState(false);
   const [species, setSpecies] = useState([]);
 
   const handleMapClick = async (event) => {
@@ -79,6 +79,11 @@ function App() {
           "Content-Type": "application/json",
         },
       });
+      console.log(response);
+      if (!response.ok) {
+        setError(true);
+        return;
+      }
       const data = await response.json();
       setSelectedSpecies(data);
     } catch (error) {
@@ -130,7 +135,7 @@ function App() {
           })}
         </Map>
       </div>
-      <Drawer selectedSpecies={selectedSpecies} />
+      <Drawer selectedSpecies={selectedSpecies} error={error} />
     </>
   );
 }

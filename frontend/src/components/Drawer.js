@@ -16,11 +16,12 @@ const StyledDrawer = styled.aside`
   }
 `;
 
-function Drawer({ selectedSpecies }) {
+function Drawer({ selectedSpecies, error }) {
   return (
     <Portal>
       <StyledDrawer>
         {" "}
+        {error && <div>No additional information found.</div>}
         {Object.keys(selectedSpecies).length !== 0 && (
           <>
             {" "}

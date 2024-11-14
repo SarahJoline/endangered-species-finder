@@ -88,7 +88,7 @@ function App() {
 
   return (
     <>
-      <div style={{ width: "80vw", height: "80vh" }}>
+      <div style={{ width: "100vw", height: "100vh" }}>
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           initialViewState={{

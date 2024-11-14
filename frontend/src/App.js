@@ -97,8 +97,8 @@ function App() {
             zoom: 1,
           }}
           mapStyle="mapbox://styles/mapbox/streets-v11"
-          width="80%"
-          height="80%"
+          width="100%"
+          height="100%"
           onClick={handleMapClick}
         >
           {species.map((sp) => {

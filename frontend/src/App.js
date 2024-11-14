@@ -39,7 +39,9 @@ function App() {
       const groupedBySpeciesArray = Object.values(
         data.results.reduce((acc, current) => {
           const speciesName = current?.species;
-
+          if (!speciesName) {
+            return acc;
+          }
           // If the species isn't already a key in the accumulator, add it
           if (!acc[speciesName]) {
             acc[speciesName] = {

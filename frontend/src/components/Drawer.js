@@ -29,6 +29,7 @@ function Drawer({ selectedSpecies, error }) {
               <img
                 width="300"
                 height="300"
+                alt={selectedSpecies.title}
                 src={selectedSpecies.originalimage.source}
               />
             )}

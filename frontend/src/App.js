@@ -11,6 +11,7 @@ import "./App.css";
 function App() {
   const [selectedSpecies, setSelectedSpecies] = useState({});
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
   const [species, setSpecies] = useState([]);
 
   const handleMapClick = async (event) => {
@@ -82,10 +83,13 @@ function App() {
       console.log(response);
       if (!response.ok) {
         setError(true);
+        setOpen(true);
         return;
       }
       const data = await response.json();
+
       setSelectedSpecies(data);
+      setOpen(open);
     } catch (error) {
       console.error("Error fetching species data:", error);
     }
@@ -135,7 +139,7 @@ function App() {
           })}
         </Map>
       </div>
-      <Drawer selectedSpecies={selectedSpecies} error={error} />
+      {open && <Drawer selectedSpecies={selectedSpecies} error={error} />}
     </>
   );
 }

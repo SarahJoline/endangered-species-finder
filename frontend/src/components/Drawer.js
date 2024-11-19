@@ -34,8 +34,7 @@ const StyledIconButton = styled.button`
 `;
 
 const StyledImage = styled.img`
-  // max-height: 300px;
-  max-width: 40vw;
+  max-width: 50%;
 `;
 
 const StyledTitle = styled.h1`
@@ -43,7 +42,10 @@ const StyledTitle = styled.h1`
   font-size: 30px;
 `;
 
-const StyledSubtitle = styled.h2``;
+const StyledSubtitle = styled.h2`
+  font-weight: 400;
+  font-size: 25px;
+`;
 
 const StyledParagraph = styled.p`
   width: 80%;

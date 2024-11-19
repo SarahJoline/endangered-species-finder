@@ -72,7 +72,6 @@ function App() {
   };
 
   async function getSpeciesInfo(sp) {
-    console.log(sp);
     try {
       const response = await fetch(`/api/speciesSearch/${sp.species}`, {
         method: "GET",
@@ -80,14 +79,13 @@ function App() {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
-      if (!response.ok) {
+
+      if (!!response.ok) {
         setError(true);
         setOpen(true);
         return;
       }
       const data = await response.json();
-
       setSelectedSpecies(data);
       setOpen(open);
     } catch (error) {

@@ -57,10 +57,6 @@ const StyledContentContainer = styled.div`
   align-items: center;
 `;
 
-const StyledPlaceHolder = styled.div`
-  width: 40px;
-`;
-
 function Drawer({ selectedSpecies, error, close }) {
   return (
     <Portal>

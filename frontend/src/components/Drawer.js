@@ -18,7 +18,6 @@ const StyledDrawer = styled.aside`
 
 const StyledHeader = styled.div`
   flex: 1;
-  margin-bottom: 20px;
   display: flex;
   justify-content: flex-end;
 `;

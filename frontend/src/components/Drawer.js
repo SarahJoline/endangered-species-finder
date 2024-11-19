@@ -17,7 +17,6 @@ const StyledDrawer = styled.aside`
 `;
 
 function Drawer({ selectedSpecies, error, close }) {
-  console.log(error);
   return (
     <Portal>
       <StyledDrawer>

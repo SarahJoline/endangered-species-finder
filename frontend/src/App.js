@@ -14,6 +14,12 @@ function App() {
   const [open, setOpen] = useState(false);
   const [species, setSpecies] = useState([]);
 
+  function close() {
+    setOpen(false);
+    setError(false);
+    setSelectedSpecies({});
+  }
+
   const handleMapClick = async (event) => {
     const { lat, lng } = event.lngLat;
     const latitude =
@@ -79,7 +85,7 @@ function App() {
           "Content-Type": "application/json",
         },
       });
-
+      console.log(response);
       if (!!response.ok) {
         setError(true);
         setOpen(true);
@@ -137,7 +143,13 @@ function App() {
           })}
         </Map>
       </div>
-      {open && <Drawer selectedSpecies={selectedSpecies} error={error} />}
+      {open && (
+        <Drawer
+          selectedSpecies={selectedSpecies}
+          error={error}
+          close={close()}
+        />
+      )}
     </>
   );
 }

@@ -27,6 +27,10 @@ const StyledIconButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
+  border: 0;
+  width: 40px;
+  height: 40px;
 `;
 
 function Drawer({ selectedSpecies, error, close }) {
@@ -34,7 +38,10 @@ function Drawer({ selectedSpecies, error, close }) {
     <Portal>
       <StyledDrawer>
         <StyledHeader>
-          <StyledIconButton onClick={() => close()}>X</StyledIconButton>{" "}
+          <StyledIconButton onClick={() => close()}>
+            {" "}
+            <img src="/close-line-icon.svg" alt="X" />
+          </StyledIconButton>{" "}
         </StyledHeader>
         {error && <div>No additional information found.</div>}
         {Object.keys(selectedSpecies).length !== 0 && (

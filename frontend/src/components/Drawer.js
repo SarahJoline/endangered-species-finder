@@ -16,11 +16,20 @@ const StyledDrawer = styled.aside`
   }
 `;
 
+const StyledHeader = styled.div`
+  flex: 1;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
 function Drawer({ selectedSpecies, error, close }) {
   return (
     <Portal>
       <StyledDrawer>
-        <button onClick={() => close()}>X</button>{" "}
+        <StyledHeader>
+          <button onClick={() => close()}>X</button>{" "}
+        </StyledHeader>
         {error && <div>No additional information found.</div>}
         {Object.keys(selectedSpecies).length !== 0 && (
           <>

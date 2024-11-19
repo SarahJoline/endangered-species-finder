@@ -1,6 +1,7 @@
 .App {
   width: 100vw;
   height: 100vh;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .mapboxgl-ctrl-attrib-button {

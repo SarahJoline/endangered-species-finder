@@ -34,8 +34,8 @@ const StyledIconButton = styled.button`
 `;
 
 const StyledImage = styled.img`
-  max-height: 300px;
-  max-width: 300px;
+  // max-height: 300px;
+  max-width: 40vw;
 `;
 
 const StyledTitle = styled.h1``;
@@ -43,6 +43,13 @@ const StyledTitle = styled.h1``;
 const StyledSubtitle = styled.h2``;
 
 const StyledParagraph = styled.p``;
+
+const StyledContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 function Drawer({ selectedSpecies, error, close }) {
   return (
@@ -54,21 +61,23 @@ function Drawer({ selectedSpecies, error, close }) {
             <img src="/close-line-icon.svg" alt="X" />
           </StyledIconButton>{" "}
         </StyledHeader>
-        {error && <div>No additional information found.</div>}
-        {Object.keys(selectedSpecies).length !== 0 && (
-          <>
-            {" "}
-            {selectedSpecies.originalimage && (
-              <StyledImage
-                alt={selectedSpecies.title}
-                src={selectedSpecies.originalimage.source}
-              />
-            )}
-            <StyledTitle>{selectedSpecies.title}</StyledTitle>
-            <StyledSubtitle>{selectedSpecies.description}</StyledSubtitle>
-            <StyledParagraph>{selectedSpecies.extract}</StyledParagraph>
-          </>
-        )}
+        <StyledContentContainer>
+          {error && <div>No additional information found.</div>}
+          {Object.keys(selectedSpecies).length !== 0 && (
+            <>
+              <StyledTitle>{selectedSpecies.title}</StyledTitle>
+
+              {selectedSpecies.originalimage && (
+                <StyledImage
+                  alt={selectedSpecies.title}
+                  src={selectedSpecies.originalimage.source}
+                />
+              )}
+              <StyledSubtitle>{selectedSpecies.description}</StyledSubtitle>
+              <StyledParagraph>{selectedSpecies.extract}</StyledParagraph>
+            </>
+          )}
+        </StyledContentContainer>
       </StyledDrawer>
     </Portal>
   );

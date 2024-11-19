@@ -9,18 +9,17 @@ const StyledDrawer = styled.aside`
   overflow-y: auto;
   width: 100%;
   z-index: 2;
-  padding: 20px;
+  padding: 10px;
   @media only screen and (min-width: 48em) {
     max-width: 678px;
-    padding: 2.5em;
+    padding: 1.5em;
   }
 `;
 
 const StyledHeader = styled.div`
   flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end;
 `;
 
 const StyledIconButton = styled.button`
@@ -67,13 +66,12 @@ function Drawer({ selectedSpecies, error, close }) {
     <Portal>
       <StyledDrawer>
         <StyledHeader>
-          <StyledPlaceHolder></StyledPlaceHolder>
-          <StyledTitle>{selectedSpecies.title}</StyledTitle>
           <StyledIconButton onClick={() => close()}>
             <img src="/close-line-icon.svg" alt="X" />
           </StyledIconButton>{" "}
         </StyledHeader>
         <StyledContentContainer>
+          <StyledTitle>{selectedSpecies.title.toUpperCase()}</StyledTitle>
           {error && <div>No additional information found.</div>}
           {Object.keys(selectedSpecies).length !== 0 && (
             <>

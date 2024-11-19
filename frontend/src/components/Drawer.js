@@ -5,7 +5,7 @@ const StyledDrawer = styled.aside`
   position: fixed;
   height: 100%;
   top: 0;
-  background-color: #ffffff;
+  background-color: #e9f7ec;
   overflow-y: auto;
   width: 100%;
   z-index: 2;
@@ -19,7 +19,8 @@ const StyledDrawer = styled.aside`
 const StyledHeader = styled.div`
   flex: 1;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledIconButton = styled.button`
@@ -37,11 +38,16 @@ const StyledImage = styled.img`
   max-width: 40vw;
 `;
 
-const StyledTitle = styled.h1``;
+const StyledTitle = styled.h1`
+  font-weight: 400;
+  font-size: 30px;
+`;
 
 const StyledSubtitle = styled.h2``;
 
-const StyledParagraph = styled.p``;
+const StyledParagraph = styled.p`
+  width: 80%;
+`;
 
 const StyledContentContainer = styled.div`
   display: flex;
@@ -50,13 +56,18 @@ const StyledContentContainer = styled.div`
   align-items: center;
 `;
 
+const StyledPlaceHolder = styled.div`
+  width: 40px;
+`;
+
 function Drawer({ selectedSpecies, error, close }) {
   return (
     <Portal>
       <StyledDrawer>
         <StyledHeader>
+          <StyledPlaceHolder></StyledPlaceHolder>
+          <StyledTitle>{selectedSpecies.title}</StyledTitle>
           <StyledIconButton onClick={() => close()}>
-            {" "}
             <img src="/close-line-icon.svg" alt="X" />
           </StyledIconButton>{" "}
         </StyledHeader>
@@ -64,8 +75,6 @@ function Drawer({ selectedSpecies, error, close }) {
           {error && <div>No additional information found.</div>}
           {Object.keys(selectedSpecies).length !== 0 && (
             <>
-              <StyledTitle>{selectedSpecies.title}</StyledTitle>
-
               {selectedSpecies.originalimage && (
                 <StyledImage
                   alt={selectedSpecies.title}

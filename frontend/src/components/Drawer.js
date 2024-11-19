@@ -33,6 +33,11 @@ const StyledIconButton = styled.button`
   height: 40px;
 `;
 
+const StyledImage = styled.img`
+  max-height: 300px;
+  max-width: 300px;
+`;
+
 function Drawer({ selectedSpecies, error, close }) {
   return (
     <Portal>
@@ -48,9 +53,7 @@ function Drawer({ selectedSpecies, error, close }) {
           <>
             {" "}
             {selectedSpecies.originalimage && (
-              <img
-                width="300"
-                height="300"
+              <StyledImage
                 alt={selectedSpecies.title}
                 src={selectedSpecies.originalimage.source}
               />

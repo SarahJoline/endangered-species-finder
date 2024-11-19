@@ -23,12 +23,18 @@ const StyledHeader = styled.div`
   justify-content: flex-end;
 `;
 
+const StyledIconButton = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
 function Drawer({ selectedSpecies, error, close }) {
   return (
     <Portal>
       <StyledDrawer>
         <StyledHeader>
-          <button onClick={() => close()}>X</button>{" "}
+          <StyledIconButton onClick={() => close()}>X</StyledIconButton>{" "}
         </StyledHeader>
         {error && <div>No additional information found.</div>}
         {Object.keys(selectedSpecies).length !== 0 && (

@@ -38,6 +38,12 @@ const StyledImage = styled.img`
   max-width: 300px;
 `;
 
+const StyledTitle = styled.h1``;
+
+const StyledSubtitle = styled.h2``;
+
+const StyledParagraph = styled.p``;
+
 function Drawer({ selectedSpecies, error, close }) {
   return (
     <Portal>
@@ -58,9 +64,9 @@ function Drawer({ selectedSpecies, error, close }) {
                 src={selectedSpecies.originalimage.source}
               />
             )}
-            <h1>{selectedSpecies.title}</h1>
-            <h2>{selectedSpecies.description}</h2>
-            <p>{selectedSpecies.extract}</p>
+            <StyledTitle>{selectedSpecies.title}</StyledTitle>
+            <StyledSubtitle>{selectedSpecies.description}</StyledSubtitle>
+            <StyledParagraph>{selectedSpecies.extract}</StyledParagraph>
           </>
         )}
       </StyledDrawer>

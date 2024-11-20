@@ -6,7 +6,7 @@ const StyledDrawer = styled.aside`
   height: 100%;
   top: 0;
   background-color: #e9f7ec;
-  overflow-y: auto;
+  overflow-y: hidden;
   width: 100%;
   z-index: 2;
   padding: 10px;
@@ -53,8 +53,10 @@ const StyledParagraph = styled.p`
 const StyledContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  overflow-y: auto;
+  height: 100%;
 `;
 
 function Drawer({ selectedSpecies, error, close }) {

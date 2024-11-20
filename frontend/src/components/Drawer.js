@@ -72,7 +72,10 @@ function Drawer({ selectedSpecies, error, close }) {
           </StyledIconButton>{" "}
         </StyledHeader>
         <StyledContentContainer>
-          <StyledTitle>{selectedSpecies.title.toUpperCase()}</StyledTitle>
+          <StyledTitle>
+            {Object.keys(selectedSpecies).length !== 0 &&
+              selectedSpecies.title.toUpperCase()}
+          </StyledTitle>
           {error && <div>No additional information found.</div>}
           {Object.keys(selectedSpecies).length !== 0 && (
             <>

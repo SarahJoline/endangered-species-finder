@@ -13,7 +13,6 @@ function App() {
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
   const [species, setSpecies] = useState([]);
-  console.log(open);
   function close() {
     setOpen(false);
     setError(false);
@@ -33,7 +32,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&iucnRedListCategory=EN&iucnRedListCategory=CE&limit=300`
+        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&iucnRedListCategory=EN&iucnRedListCategory=CE&iucnRedListCategory=VU&limit=300`
       );
       const data = await response.json();
       const uniqueSpecies = data.results.reduce((acc, current) => {
@@ -70,6 +69,8 @@ function App() {
           return acc;
         }, {})
       );
+
+      console.log(groupedBySpeciesArray);
 
       setSpecies(groupedBySpeciesArray);
     } catch (error) {

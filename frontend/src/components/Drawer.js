@@ -3,6 +3,8 @@ import Portal from "./Portal";
 
 const StyledDrawer = styled.aside`
   position: fixed;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   top: 0;
   background-color: #e9f7ec;
@@ -10,6 +12,7 @@ const StyledDrawer = styled.aside`
   width: 100%;
   z-index: 2;
   padding: 10px;
+  box-sizing: border-box;
   @media only screen and (min-width: 48em) {
     max-width: 678px;
     padding: 1.5em;
@@ -17,7 +20,6 @@ const StyledDrawer = styled.aside`
 `;
 
 const StyledHeader = styled.div`
-  flex: 1;
   display: flex;
   justify-content: flex-end;
 `;
@@ -39,6 +41,7 @@ const StyledImage = styled.img`
 const StyledTitle = styled.h1`
   font-weight: 400;
   font-size: 30px;
+  margin-top: 0px;
 `;
 
 const StyledSubtitle = styled.h2`
@@ -56,7 +59,7 @@ const StyledContentContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   overflow-y: auto;
-  height: 100%;
+  flex: 1;
 `;
 
 function Drawer({ selectedSpecies, error, close }) {

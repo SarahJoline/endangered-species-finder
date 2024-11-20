@@ -19,20 +19,45 @@ function App() {
     setSelectedSpecies({});
   }
 
+  function calculateBoundingBox(lat, lng, radiusKm) {
+    const earthRadiusKm = 6371; // Earth's radius in kilometers
+
+    // Convert degrees to radians
+    const latRad = (lat * Math.PI) / 180;
+    const lngRad = (lng * Math.PI) / 180;
+
+    // Radius in radians
+    const angularRadius = radiusKm / earthRadiusKm;
+
+    // Latitude bounds
+    const minLat = latRad - angularRadius;
+    const maxLat = latRad + angularRadius;
+
+    // Longitude bounds (adjust for latitude)
+    const minLng = lngRad - angularRadius / Math.cos(latRad);
+    const maxLng = lngRad + angularRadius / Math.cos(latRad);
+
+    // Convert back to degrees and round to 1 decimal point
+    return {
+      minLat: +((minLat * 180) / Math.PI).toFixed(1),
+      maxLat: +((maxLat * 180) / Math.PI).toFixed(1),
+      minLng: +((minLng * 180) / Math.PI).toFixed(1),
+      maxLng: +((maxLng * 180) / Math.PI).toFixed(1),
+    };
+  }
+
   const handleMapClick = async (event) => {
     const { lat, lng } = event.lngLat;
-    const latitude =
-      lat.toFixed(1) < Math.round(lat)
-        ? `${lat.toFixed(1)},${Math.round(lat)}`
-        : `${Math.round(lat)},${lat.toFixed(1)}`;
-    const longitude =
-      lng.toFixed(1) < Math.round(lng)
-        ? `${lng.toFixed(1)},${Math.round(lng)}`
-        : `${Math.round(lng)},${lng.toFixed(1)}`;
 
+    const radiusKm = 10; // Radius in kilometers
+
+    const bounds = calculateBoundingBox(lat, lng, radiusKm);
+
+    const apiFormattedLat = `${bounds.minLat},${bounds.maxLat}`;
+    const apiFormattedLng = `${bounds.minLng},${bounds.maxLng}`;
     try {
       const response = await fetch(
-        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&iucnRedListCategory=EN&iucnRedListCategory=CE&iucnRedListCategory=VU&limit=300`
+        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${apiFormattedLat}&decimalLongitude=${apiFormattedLng}&iucnRedListCategory=EN&iucnRedListCategory=CE&iucnRedListCategory=VU&limit=300`
       );
       const data = await response.json();
       const uniqueSpecies = data.results.reduce((acc, current) => {

@@ -33,7 +33,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&iucnRedListCategory=NE&iucnRedListCategory=CE&limit=300`
+        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${latitude}&decimalLongitude=${longitude}&iucnRedListCategory=EN&iucnRedListCategory=CE&limit=300`
       );
       const data = await response.json();
       const uniqueSpecies = data.results.reduce((acc, current) => {

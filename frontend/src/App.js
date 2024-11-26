@@ -13,6 +13,11 @@ function App() {
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
   const [species, setSpecies] = useState([]);
+  const [viewState, setViewState] = useState({
+    longitude: -100,
+    latitude: 40,
+    zoom: 1,
+  });
   function close() {
     setOpen(false);
     setError(false);
@@ -46,11 +51,22 @@ function App() {
     };
   }
 
+  function getRadiusFromZoom(zoom) {
+    console.log(zoom);
+
+    if (zoom >= 15) return 100;
+    if (zoom >= 12) return 200;
+    if (zoom >= 8) return 300;
+    if (zoom >= 5) return 400;
+    return 800;
+  }
+
   const handleMapClick = async (event) => {
     const { lat, lng } = event.lngLat;
 
-    const radiusKm = 10; // Radius in kilometers
+    const radiusKm = getRadiusFromZoom(viewState.zoom); // Adjust radius based on zoom
 
+    console.log(radiusKm);
     const bounds = calculateBoundingBox(lat, lng, radiusKm);
 
     const apiFormattedLat = `${bounds.minLat},${bounds.maxLat}`;
@@ -132,14 +148,11 @@ function App() {
       <div style={{ width: "100vw", height: "100vh" }}>
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          initialViewState={{
-            longitude: -100,
-            latitude: 40,
-            zoom: 1,
-          }}
+          initialViewState={viewState}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           width="100%"
           height="100%"
+          onMove={(event) => setViewState(event.viewState)}
           onClick={handleMapClick}
         >
           {species.map((sp) => {

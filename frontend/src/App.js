@@ -1,8 +1,7 @@
 import { debounce } from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
-import Map, { Marker } from "react-map-gl";
-import { Tooltip } from "react-tooltip";
+import Map, { Layer, Source } from "react-map-gl";
 import "react-tooltip/dist/react-tooltip.css";
 import Drawer from "./components/Drawer";
 import LoadingIndicator from "./components/LoadingIndicator";
@@ -156,8 +155,62 @@ function App() {
           onClick={handleMapClick}
         >
           {loading && <LoadingIndicator />}
-
-          {species.map((sp) => {
+          <Source
+            id="species-data"
+            type="geojson"
+            data={{
+              type: "FeatureCollection",
+              features: species
+                .map((sp) =>
+                  sp.occurrences.map((occ) => ({
+                    type: "Feature",
+                    geometry: {
+                      type: "Point",
+                      coordinates: [occ.longitude, occ.latitude],
+                    },
+                    properties: {
+                      species: sp.species,
+                    },
+                  }))
+                )
+                .flat(),
+            }}
+            cluster={true}
+            clusterMaxZoom={14} // Max zoom to cluster points
+            clusterRadius={50} // Radius of each cluster (in pixels)
+          >
+            <Layer
+              id="clusters"
+              type="circle"
+              source="species-data"
+              filter={["has", "point_count"]}
+              paint={{
+                "circle-color": "#51bbd6",
+                "circle-radius": 20,
+              }}
+            />
+            <Layer
+              id="cluster-count"
+              type="symbol"
+              source="species-data"
+              filter={["has", "point_count"]}
+              layout={{
+                "text-field": "{point_count_abbreviated}",
+                "text-size": 12,
+              }}
+            />
+            <Layer
+              id="unclustered-point"
+              type="circle"
+              source="species-data"
+              filter={["!", ["has", "point_count"]]}
+              paint={{
+                "circle-color": "#11b4da",
+                "circle-radius": 8,
+              }}
+            />
+          </Source>
+          {/* {species.map((sp) => {
             return sp.occurrences.map(
               (occurrence, index) =>
                 occurrence.latitude &&
@@ -181,7 +234,7 @@ function App() {
                   </Marker>
                 )
             );
-          })}
+          })} */}
         </Map>
       </div>
       {open && (

@@ -51,8 +51,6 @@ function App() {
   }
 
   function getRadiusFromZoom(zoom) {
-    console.log(zoom);
-
     if (zoom >= 15) return 100;
     if (zoom >= 12) return 200;
     if (zoom >= 8) return 300;
@@ -61,13 +59,10 @@ function App() {
   }
 
   const handleMapClick = async (event) => {
-    console.log(event.features);
     if (event.features) {
-      console.log("Features:", event.features);
       const feature = event.features[0]; // Get the first feature clicked
       if (feature) {
         const speciesName = feature.properties.species; // Ensure this matches your property
-        console.log(speciesName);
         getSpeciesInfo(speciesName);
       }
     } else {
@@ -76,7 +71,6 @@ function App() {
 
       const radiusKm = getRadiusFromZoom(viewState.zoom); // Adjust radius based on zoom
 
-      console.log(radiusKm);
       const bounds = calculateBoundingBox(lat, lng, radiusKm);
 
       const apiFormattedLat = `${bounds.minLat},${bounds.maxLat}`;
@@ -115,8 +109,6 @@ function App() {
             return acc;
           }, {})
         );
-
-        console.log(groupedBySpeciesArray);
 
         setSpecies(groupedBySpeciesArray);
       } catch (error) {
@@ -216,34 +208,8 @@ function App() {
                 "circle-color": "#11b4da",
                 "circle-radius": 8,
               }}
-              onClick={() => console.log("blue")}
             />
           </Source>
-          {/* {species.map((sp) => {
-            return sp.occurrences.map(
-              (occurrence, index) =>
-                occurrence.latitude &&
-                occurrence.longitude && (
-                  <Marker
-                    key={`${sp.species}-${index}`}
-                    latitude={occurrence.latitude}
-                    longitude={occurrence.longitude}
-                  >
-                    <img
-                      src="/drop-pin.svg"
-                      alt="Drop Pin"
-                      height="20"
-                      width="20"
-                      data-tooltip-id="my-tooltip"
-                      data-tooltip-content={sp.species}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => getSpeciesInfo(sp)}
-                    />
-                    <Tooltip id="my-tooltip" />
-                  </Marker>
-                )
-            );
-          })} */}
         </Map>
       </div>
       {open && (

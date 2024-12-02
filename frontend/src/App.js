@@ -67,6 +67,7 @@ function App() {
       const feature = event.features[0]; // Get the first feature clicked
       if (feature) {
         const speciesName = feature.properties.species; // Ensure this matches your property
+        console.log(speciesName);
         getSpeciesInfo(speciesName);
       }
     } else {
@@ -126,15 +127,14 @@ function App() {
     }
   };
 
-  async function getSpeciesInfo(sp) {
+  async function getSpeciesInfo(species) {
     try {
-      const response = await fetch(`/api/speciesSearch/${sp.species}`, {
+      const response = await fetch(`/api/speciesSearch/${species}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
       if (!response.ok) {
         setError(true);
         setOpen(true);

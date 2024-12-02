@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import { Tooltip } from "react-tooltip";
 import Drawer from "./components/Drawer";
+import LoadingIndicator from "./components/LoadingIndicator";
 
 import "./App.css";
 
@@ -62,6 +63,7 @@ function App() {
     return 800;
   }
 
+  console.log(loading);
   const handleMapClick = async (event) => {
     setLoading(true);
     const { lat, lng } = event.lngLat;
@@ -160,6 +162,8 @@ function App() {
           onMove={(event) => setViewState(event.viewState)}
           onClick={handleMapClick}
         >
+          {loading && <LoadingIndicator />}
+
           {species.map((sp) => {
             return sp.occurrences.map(
               (occurrence, index) =>
@@ -181,7 +185,6 @@ function App() {
                       onClick={() => getSpeciesInfo(sp)}
                     />
                     <Tooltip id="my-tooltip" />
-                    {loading && <div>loading</div>}
                   </Marker>
                 )
             );

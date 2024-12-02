@@ -63,7 +63,6 @@ function App() {
     return 800;
   }
 
-  console.log(loading);
   const handleMapClick = async (event) => {
     setLoading(true);
     const { lat, lng } = event.lngLat;

@@ -1,9 +1,9 @@
+import { debounce } from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
-import "react-tooltip/dist/react-tooltip.css";
-
 import React, { useState } from "react";
 import Map, { Marker } from "react-map-gl";
 import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import Drawer from "./components/Drawer";
 import LoadingIndicator from "./components/LoadingIndicator";
 
@@ -63,7 +63,7 @@ function App() {
     return 800;
   }
 
-  const handleMapClick = async (event) => {
+  const handleMapClick = debounce(async (event) => {
     setLoading(true);
     const { lat, lng } = event.lngLat;
 
@@ -117,7 +117,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, 500);
 
   async function getSpeciesInfo(sp) {
     try {

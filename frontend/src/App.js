@@ -1,12 +1,10 @@
-import { debounce } from "lodash";
 import "mapbox-gl/dist/mapbox-gl.css";
 import React, { useState } from "react";
 import Map, { Layer, Source } from "react-map-gl";
 import "react-tooltip/dist/react-tooltip.css";
+import "./App.css";
 import Drawer from "./components/Drawer";
 import LoadingIndicator from "./components/LoadingIndicator";
-
-import "./App.css";
 
 function App() {
   const [selectedSpecies, setSelectedSpecies] = useState({});
@@ -62,7 +60,25 @@ function App() {
     return 800;
   }
 
-  const handleMapClick = debounce(async (event) => {
+  const handleMapClick2 = (event) => {
+    console.log(event.features);
+    if (event.features && event.features.length > 0) {
+      console.log("Clicked on:", event.features);
+    } else {
+      console.log("No features clicked");
+    }
+  };
+
+  const handleMapClick = async (event) => {
+    console.log(event.features);
+    if (event.features) {
+      console.log("Features:", event.features);
+      const feature = event.features[0]; // Get the first feature clicked
+      if (feature) {
+        const speciesName = feature.properties.species; // Ensure this matches your property
+        getSpeciesInfo(speciesName);
+      }
+    }
     setLoading(true);
     const { lat, lng } = event.lngLat;
 
@@ -116,7 +132,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-  }, 500);
+  };
 
   async function getSpeciesInfo(sp) {
     try {
@@ -140,21 +156,21 @@ function App() {
     }
   }
 
-  console.log(selectedSpecies);
-
   return (
     <>
       <div style={{ width: "100vw", height: "100vh" }}>
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           initialViewState={viewState}
-          mapStyle="mapbox://styles/mapbox/streets-v11"
+          mapStyle="mapbox://styles/mapbox/dark-v10"
           width="100%"
           height="100%"
           onMove={(event) => setViewState(event.viewState)}
           onClick={handleMapClick}
+          interactiveLayerIds={["unclustered-point"]}
         >
           {loading && <LoadingIndicator />}
+
           <Source
             id="species-data"
             type="geojson"
@@ -208,6 +224,7 @@ function App() {
                 "circle-color": "#11b4da",
                 "circle-radius": 8,
               }}
+              onClick={() => console.log("blue")}
             />
           </Source>
           {/* {species.map((sp) => {

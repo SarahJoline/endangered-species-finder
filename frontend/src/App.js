@@ -60,15 +60,6 @@ function App() {
     return 800;
   }
 
-  const handleMapClick2 = (event) => {
-    console.log(event.features);
-    if (event.features && event.features.length > 0) {
-      console.log("Clicked on:", event.features);
-    } else {
-      console.log("No features clicked");
-    }
-  };
-
   const handleMapClick = async (event) => {
     console.log(event.features);
     if (event.features) {

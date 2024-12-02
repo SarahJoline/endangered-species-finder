@@ -69,59 +69,60 @@ function App() {
         const speciesName = feature.properties.species; // Ensure this matches your property
         getSpeciesInfo(speciesName);
       }
-    }
-    setLoading(true);
-    const { lat, lng } = event.lngLat;
+    } else {
+      setLoading(true);
+      const { lat, lng } = event.lngLat;
 
-    const radiusKm = getRadiusFromZoom(viewState.zoom); // Adjust radius based on zoom
+      const radiusKm = getRadiusFromZoom(viewState.zoom); // Adjust radius based on zoom
 
-    console.log(radiusKm);
-    const bounds = calculateBoundingBox(lat, lng, radiusKm);
+      console.log(radiusKm);
+      const bounds = calculateBoundingBox(lat, lng, radiusKm);
 
-    const apiFormattedLat = `${bounds.minLat},${bounds.maxLat}`;
-    const apiFormattedLng = `${bounds.minLng},${bounds.maxLng}`;
+      const apiFormattedLat = `${bounds.minLat},${bounds.maxLat}`;
+      const apiFormattedLng = `${bounds.minLng},${bounds.maxLng}`;
 
-    try {
-      const response = await fetch(
-        `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${apiFormattedLat}&decimalLongitude=${apiFormattedLng}&iucnRedListCategory=EN&iucnRedListCategory=CE&iucnRedListCategory=VU&limit=300`
-      );
-      const data = await response.json();
+      try {
+        const response = await fetch(
+          `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${apiFormattedLat}&decimalLongitude=${apiFormattedLng}&iucnRedListCategory=EN&iucnRedListCategory=CE&iucnRedListCategory=VU&limit=300`
+        );
+        const data = await response.json();
 
-      const groupedBySpeciesArray = Object.values(
-        data.results.reduce((acc, current) => {
-          const speciesName = current?.species;
-          if (!speciesName) {
+        const groupedBySpeciesArray = Object.values(
+          data.results.reduce((acc, current) => {
+            const speciesName = current?.species;
+            if (!speciesName) {
+              return acc;
+            }
+            // If the species isn't already a key in the accumulator, add it
+            if (!acc[speciesName]) {
+              acc[speciesName] = {
+                species: speciesName,
+                kingdom: current.kingdom,
+                occurrences: [], // Initialize the occurrences array
+              };
+            }
+
+            // Push the current occurrence to the species' occurrences array
+            acc[speciesName].occurrences.push({
+              month: current.month,
+              day: current.day,
+              year: current.year,
+              latitude: current.decimalLatitude,
+              longitude: current.decimalLongitude,
+            });
+
             return acc;
-          }
-          // If the species isn't already a key in the accumulator, add it
-          if (!acc[speciesName]) {
-            acc[speciesName] = {
-              species: speciesName,
-              kingdom: current.kingdom,
-              occurrences: [], // Initialize the occurrences array
-            };
-          }
+          }, {})
+        );
 
-          // Push the current occurrence to the species' occurrences array
-          acc[speciesName].occurrences.push({
-            month: current.month,
-            day: current.day,
-            year: current.year,
-            latitude: current.decimalLatitude,
-            longitude: current.decimalLongitude,
-          });
+        console.log(groupedBySpeciesArray);
 
-          return acc;
-        }, {})
-      );
-
-      console.log(groupedBySpeciesArray);
-
-      setSpecies(groupedBySpeciesArray);
-    } catch (error) {
-      console.error("Error fetching occurence data:", error);
-    } finally {
-      setLoading(false);
+        setSpecies(groupedBySpeciesArray);
+      } catch (error) {
+        console.error("Error fetching occurence data:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

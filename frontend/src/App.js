@@ -59,7 +59,9 @@ function App() {
   }
 
   const handleMapClick = async (event) => {
-    if (event.features) {
+    console.log(event);
+    console.log(event.features);
+    if (event.features && event.features.length > 0) {
       const feature = event.features[0]; // Get the first feature clicked
       if (feature) {
         const speciesName = feature.properties.species; // Ensure this matches your property

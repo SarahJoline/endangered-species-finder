@@ -43,7 +43,6 @@ function LoadingIndicator() {
     <Portal>
       <LoadingOverlay>
         <Spinner />
-        <LoadingText>Loading...</LoadingText>
       </LoadingOverlay>
     </Portal>
   );

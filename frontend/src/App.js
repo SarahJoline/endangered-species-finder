@@ -13,6 +13,7 @@ function App() {
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
   const [species, setSpecies] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [viewState, setViewState] = useState({
     longitude: -100,
     latitude: 40,
@@ -62,6 +63,7 @@ function App() {
   }
 
   const handleMapClick = async (event) => {
+    setLoading(true);
     const { lat, lng } = event.lngLat;
 
     const radiusKm = getRadiusFromZoom(viewState.zoom); // Adjust radius based on zoom
@@ -71,6 +73,7 @@ function App() {
 
     const apiFormattedLat = `${bounds.minLat},${bounds.maxLat}`;
     const apiFormattedLng = `${bounds.minLng},${bounds.maxLng}`;
+
     try {
       const response = await fetch(
         `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${apiFormattedLat}&decimalLongitude=${apiFormattedLng}&iucnRedListCategory=EN&iucnRedListCategory=CE&iucnRedListCategory=VU&limit=300`
@@ -116,6 +119,8 @@ function App() {
       setSpecies(groupedBySpeciesArray);
     } catch (error) {
       console.error("Error fetching occurence data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -176,6 +181,7 @@ function App() {
                       onClick={() => getSpeciesInfo(sp)}
                     />
                     <Tooltip id="my-tooltip" />
+                    {loading && <div>loading</div>}
                   </Marker>
                 )
             );

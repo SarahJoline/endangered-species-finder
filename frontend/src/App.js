@@ -81,12 +81,6 @@ function App() {
         `https://api.gbif.org/v1/occurrence/search?decimalLatitude=${apiFormattedLat}&decimalLongitude=${apiFormattedLng}&iucnRedListCategory=EN&iucnRedListCategory=CE&iucnRedListCategory=VU&limit=300`
       );
       const data = await response.json();
-      const uniqueSpecies = data.results.reduce((acc, current) => {
-        if (!acc.some((item) => item.species === current.species)) {
-          acc.push(current);
-        }
-        return acc;
-      }, []);
 
       const groupedBySpeciesArray = Object.values(
         data.results.reduce((acc, current) => {

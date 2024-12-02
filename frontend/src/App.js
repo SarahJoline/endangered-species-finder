@@ -59,8 +59,6 @@ function App() {
   }
 
   const handleMapClick = async (event) => {
-    console.log(event);
-    console.log(event.features);
     if (event.features && event.features.length > 0) {
       const feature = event.features[0]; // Get the first feature clicked
       if (feature) {
@@ -179,7 +177,7 @@ function App() {
             }}
             cluster={true}
             clusterMaxZoom={14} // Max zoom to cluster points
-            clusterRadius={50} // Radius of each cluster (in pixels)
+            clusterRadius={50} // Radius of each cluster in pixels
           >
             <Layer
               id="clusters"

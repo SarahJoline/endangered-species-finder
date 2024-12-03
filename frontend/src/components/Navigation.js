@@ -3,7 +3,8 @@ import styled from "styled-components";
 const StyledNavigation = styled.div`
   height: 50px;
   flex: 1;
-  background-color: #34364a;
+  background: linear-gradient(180deg, #4b4d61, #34364a);
+  color: #fff;
 `;
 
 function Navigation() {

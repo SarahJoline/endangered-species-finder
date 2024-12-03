@@ -8,7 +8,7 @@ const StyledNavigation = styled.div`
 `;
 
 function Navigation() {
-  return <StyledNavigation>Navigation</StyledNavigation>;
+  return <StyledNavigation>What do I want to put here?</StyledNavigation>;
 }
 
 export default Navigation;

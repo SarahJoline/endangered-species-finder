@@ -7,7 +7,8 @@ const StyledDrawer = styled.aside`
   flex-direction: column;
   height: 100%;
   top: 0;
-  background-color: #e9f7ec;
+  background: linear-gradient(180deg, #4b4d61, #34364a);
+  color: #f0f1f5;
   overflow-y: hidden;
   width: 100%;
   z-index: 2;

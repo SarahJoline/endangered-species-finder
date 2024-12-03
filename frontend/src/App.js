@@ -5,6 +5,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import "./App.css";
 import Drawer from "./components/Drawer";
 import LoadingIndicator from "./components/LoadingIndicator";
+import Navigation from "./components/Navigation";
 
 function App() {
   const [selectedSpecies, setSelectedSpecies] = useState({});
@@ -142,6 +143,7 @@ function App() {
 
   return (
     <>
+      <Navigation />
       <div style={{ width: "100vw", height: "100vh" }}>
         <Map
           mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}

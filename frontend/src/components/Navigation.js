@@ -14,6 +14,7 @@ const StyledSearchByButton = styled.button`
   border: none;
   background-color: transparent;
   color: #fff;
+  cursor: pointer;
 `;
 
 function Navigation() {

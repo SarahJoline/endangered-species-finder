@@ -1,4 +1,6 @@
+import React, { useState } from "react";
 import styled from "styled-components";
+import DropdownMenu from "./DropdownMenu";
 
 const StyledNavigation = styled.div`
   min-height: 50px;
@@ -15,14 +17,17 @@ const StyledSearchByButton = styled.button`
   background-color: transparent;
   color: #fff;
   cursor: pointer;
+  font-size: 16px;
 `;
 
 function Navigation() {
+  const [open, setOpen] = useState(false);
   return (
     <StyledNavigation>
-      <StyledSearchByButton onClick={() => console.log("dropdown")}>
+      <StyledSearchByButton onClick={() => setOpen(!open)}>
         Search by...
       </StyledSearchByButton>
+      {open && <DropdownMenu />}
     </StyledNavigation>
   );
 }
